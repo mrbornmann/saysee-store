@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SaySee© — AAC Visual Learning Platform</title>
+  <meta name="description" content="SaySee© 2026 SaySee LLC. SaySee is the first voice-activated AAC visual learning platform built on Applied Behavior Analysis. Designed for special education, English language learners, and every student who benefits from visual support."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --blue: #1B65B8;
+      --blue-dark: #0E4A8F;
+      --blue-light: #EEF5FF;
+      --green: #5AAB2A;
+      --green-dark: #3D8A1A;
+      --green-light: #EAF3DE;
+      --gold: #F5A623;
+      --dark: #0F1923;
+      --mid: #3A4A5C;
+      --light: #F7F9FC;
+      --white: #FFFFFF;
+      --radius: 20px;
+      --shadow: 0 8px 40px rgba(27,101,184,0.12);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--white);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(27,101,184,0.08);
+      padding: 14px 5vw;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .nav-logo-text { font-family: 'Fredoka One', cursive; font-size: 26px; color: var(--green); letter-spacing: 0.5px; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a { font-size: 14px; font-weight: 700; color: var(--mid); text-decoration: none; letter-spacing: 0.3px; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-cta {
+      background: var(--blue); color: var(--white) !important;
+      padding: 9px 22px; border-radius: 30px;
+      box-shadow: 0 4px 16px rgba(27,101,184,0.3);
+      transition: all 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--blue-dark) !important; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #0A1628 0%, #0E2A4A 40%, #0F3D2B 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 120px 5vw 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(90,171,42,0.12) 0%, transparent 70%),
+                  radial-gradient(ellipse 60% 40% at 20% 80%, rgba(27,101,184,0.15) 0%, transparent 60%);
+    }
+    .hero-eyebrow {
+      font-size: 12px; font-weight: 800; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--green); margin-bottom: 20px;
+      background: rgba(90,171,42,0.15); border: 1px solid rgba(90,171,42,0.3);
+      padding: 6px 18px; border-radius: 30px; display: inline-block;
+      position: relative;
+    }
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(40px, 6vw, 76px);
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 24px;
+      max-width: 820px;
+      position: relative;
+    }
+    .hero-title em { font-style: italic; color: var(--green); }
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 20px);
+      color: rgba(255,255,255,0.65);
+      max-width: 560px; line-height: 1.7; margin-bottom: 44px;
+      position: relative;
+    }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; position: relative; }
+    .btn-primary {
+      background: var(--green); color: var(--white);
+      padding: 15px 36px; border-radius: 50px;
+      font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 800;
+      border: none; cursor: pointer; text-decoration: none;
+      box-shadow: 0 6px 28px rgba(90,171,42,0.4);
+      transition: all 0.25s; letter-spacing: 0.3px;
+    }
+    .btn-primary:hover { background: var(--green-dark); transform: translateY(-2px); box-shadow: 0 10px 36px rgba(90,171,42,0.5); }
+    .btn-outline {
+      background: transparent; color: var(--white);
+      padding: 15px 36px; border-radius: 50px;
+      font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 800;
+      border: 2px solid rgba(255,255,255,0.3); cursor: pointer; text-decoration: none;
+      transition: all 0.25s; letter-spacing: 0.3px;
+    }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.7); transform: translateY(-2px); }
+    .hero-stats {
+      display: flex; gap: 48px; margin-top: 64px; flex-wrap: wrap; justify-content: center;
+      position: relative;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 40px;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-family: 'Fredoka One', cursive; font-size: 36px; color: var(--green); line-height: 1; }
+    .hero-stat-label { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 4px; font-weight: 600; }
+
+    /* ── SECTION BASE ── */
+    section { padding: 96px 5vw; }
+    .section-label {
+      font-size: 12px; font-weight: 800; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--green); margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.15; color: var(--dark); margin-bottom: 18px;
+    }
+    .section-title em { font-style: italic; color: var(--blue); }
+    .section-sub {
+      font-size: 17px; color: var(--mid); line-height: 1.75;
+      max-width: 580px; margin-bottom: 52px;
+    }
+
+    /* ── PROBLEM ── */
+    .problem { background: var(--light); }
+    .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; max-width: 1100px; margin: 0 auto; }
+    .problem-cards { display: flex; flex-direction: column; gap: 16px; }
+    .problem-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 22px 24px; border-left: 4px solid #E0E0E0;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    }
+    .problem-card.bad { border-left-color: #E74C3C; }
+    .problem-card.good { border-left-color: var(--green); }
+    .problem-card-title { font-weight: 800; font-size: 15px; color: var(--dark); margin-bottom: 5px; }
+    .problem-card-desc { font-size: 13px; color: var(--mid); line-height: 1.6; }
+    .problem-card-icon { font-size: 22px; margin-bottom: 8px; }
+
+    /* ── HOW IT WORKS ── */
+    .how { background: var(--white); }
+    .how-inner { max-width: 1100px; margin: 0 auto; }
+    .how-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; margin-bottom: 60px; }
+    .how-step {
+      background: var(--light); border-radius: var(--radius);
+      padding: 28px 24px; text-align: center;
+      border: 1px solid rgba(27,101,184,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .how-step:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .how-step-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--blue); color: var(--white);
+      font-size: 14px; font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px;
+    }
+    .how-step-icon { font-size: 36px; margin-bottom: 12px; }
+    .how-step-title { font-size: 15px; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
+    .how-step-desc { font-size: 13px; color: var(--mid); line-height: 1.6; }
+
+    /* ── LEVELS ── */
+    .levels { background: linear-gradient(135deg, #0A1628, #0E2A4A); color: var(--white); }
+    .levels-inner { max-width: 1100px; margin: 0 auto; }
+    .levels .section-title { color: var(--white); }
+    .levels .section-sub { color: rgba(255,255,255,0.6); }
+    .levels-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .level-card {
+      background: rgba(255,255,255,0.06); border-radius: var(--radius);
+      padding: 28px 20px; text-align: center;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .level-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .level-card.l1::before { background: var(--green); }
+    .level-card.l2::before { background: var(--blue); }
+    .level-card.l3::before { background: #888; }
+    .level-card.l4::before { background: var(--gold); }
+    .level-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-4px); }
+    .level-icon { font-size: 40px; margin-bottom: 14px; }
+    .level-num { font-size: 11px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; opacity: 0.5; margin-bottom: 6px; }
+    .level-title { font-family: 'Fredoka One', cursive; font-size: 22px; color: var(--white); margin-bottom: 8px; }
+    .level-desc { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+    .level-aba { font-size: 11px; color: var(--green); font-weight: 700; margin-top: 10px; letter-spacing: 0.3px; }
+    .levels-arrow { display: none; }
+
+    /* ── UNIQUE ── */
+    .unique { background: var(--light); }
+    .unique-inner { max-width: 1100px; margin: 0 auto; }
+    .unique-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .unique-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 32px 28px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+      border: 1px solid rgba(27,101,184,0.07);
+      transition: all 0.25s;
+      position: relative;
+    }
+    .unique-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .unique-card.featured { border: 2px solid var(--green); }
+    .unique-card.featured::after {
+      content: 'UNIQUE TO SAYSEE®';
+      position: absolute; top: -11px; left: 24px;
+      background: var(--green); color: var(--white);
+      font-size: 10px; font-weight: 900; padding: 3px 12px; border-radius: 20px; letter-spacing: 1px;
+    }
+    .unique-icon { font-size: 36px; margin-bottom: 16px; }
+    .unique-title { font-size: 18px; font-weight: 800; color: var(--dark); margin-bottom: 10px; }
+    .unique-desc { font-size: 14px; color: var(--mid); line-height: 1.75; }
+
+    /* ── ABA ── */
+    .aba { background: var(--white); }
+    .aba-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .aba-principles { display: flex; flex-direction: column; gap: 14px; }
+    .aba-principle {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px 18px; border-radius: 14px;
+      background: var(--light); border: 1px solid rgba(27,101,184,0.07);
+    }
+    .aba-principle-icon { font-size: 24px; flex-shrink: 0; }
+    .aba-principle-title { font-size: 14px; font-weight: 800; color: var(--dark); margin-bottom: 3px; }
+    .aba-principle-desc { font-size: 13px; color: var(--mid); line-height: 1.55; }
+
+    /* ── AI ── */
+    .ai-section { background: linear-gradient(135deg, var(--green-light), var(--blue-light)); }
+    .ai-inner { max-width: 1100px; margin: 0 auto; }
+    .ai-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+    .ai-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 24px 22px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .ai-card-icon { font-size: 28px; flex-shrink: 0; }
+    .ai-card-title { font-size: 14px; font-weight: 800; color: var(--dark); margin-bottom: 4px; }
+    .ai-card-desc { font-size: 13px; color: var(--mid); line-height: 1.6; }
+
+    /* ── WHO ── */
+    .who { background: var(--light); }
+    .who-inner { max-width: 1100px; margin: 0 auto; }
+    .who-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+    .who-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 24px 20px; text-align: center;
+      border: 1px solid rgba(27,101,184,0.08);
+      transition: all 0.2s;
+    }
+    .who-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .who-icon { font-size: 36px; margin-bottom: 10px; }
+    .who-title { font-size: 14px; font-weight: 800; color: var(--dark); margin-bottom: 5px; }
+    .who-desc { font-size: 12px; color: var(--mid); line-height: 1.55; }
+
+    /* ── PRIVACY ── */
+    .privacy { background: var(--white); }
+    .privacy-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .privacy-badges { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .privacy-badge {
+      background: var(--blue-light); border-radius: 14px;
+      padding: 18px 16px; text-align: center;
+      border: 1px solid rgba(27,101,184,0.15);
+    }
+    .privacy-badge-icon { font-size: 28px; margin-bottom: 6px; }
+    .privacy-badge-title { font-size: 13px; font-weight: 800; color: var(--blue); }
+
+    /* ── PRICING ── */
+    .pricing { background: var(--light); }
+    .pricing-inner { max-width: 980px; margin: 0 auto; text-align: center; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+    .pricing-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 36px 28px;
+      border: 1px solid rgba(27,101,184,0.1);
+      transition: all 0.25s; position: relative;
+    }
+    .pricing-card.featured {
+      background: var(--blue); color: var(--white);
+      border-color: var(--blue);
+      transform: scale(1.04);
+      box-shadow: 0 16px 52px rgba(27,101,184,0.35);
+    }
+    .pricing-card.featured .pricing-name { color: rgba(255,255,255,0.7); }
+    .pricing-card.featured .pricing-price { color: var(--white); }
+    .pricing-card.featured .pricing-per { color: rgba(255,255,255,0.6); }
+    .pricing-card.featured .pricing-feature { color: rgba(255,255,255,0.85); }
+    .pricing-card.featured .pricing-feature::before { color: #7FD44A; }
+    .pricing-badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--gold); color: var(--dark);
+      font-size: 10px; font-weight: 900; padding: 4px 14px; border-radius: 20px; letter-spacing: 1px; white-space: nowrap;
+    }
+    .pricing-name { font-size: 13px; font-weight: 800; color: var(--mid); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+    .pricing-price { font-family: 'Fredoka One', cursive; font-size: 48px; color: var(--blue); line-height: 1; }
+    .pricing-per { font-size: 12px; color: var(--mid); margin-bottom: 24px; margin-top: 4px; }
+    .pricing-features { list-style: none; text-align: left; margin-bottom: 28px; }
+    .pricing-feature { font-size: 13px; color: var(--mid); padding: 5px 0 5px 20px; position: relative; line-height: 1.4; }
+    .pricing-feature::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 900; }
+    .pricing-btn {
+      width: 100%; padding: 13px; border-radius: 30px; border: none;
+      font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 800;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .pricing-btn-primary { background: var(--white); color: var(--blue); }
+    .pricing-btn-primary:hover { transform: translateY(-1px); }
+    .pricing-btn-secondary { background: var(--blue); color: var(--white); box-shadow: 0 4px 16px rgba(27,101,184,0.3); }
+    .pricing-btn-secondary:hover { background: var(--blue-dark); }
+    .pricing-note { font-size: 13px; color: var(--mid); margin-top: 32px; }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: linear-gradient(135deg, #0A1628, #0E3D2B);
+      padding: 100px 5vw; text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(90,171,42,0.15) 0%, transparent 70%);
+    }
+    .cta-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 5vw, 56px);
+      color: var(--white); margin-bottom: 16px; position: relative;
+    }
+    .cta-title em { font-style: italic; color: var(--green); }
+    .cta-sub { font-size: 17px; color: rgba(255,255,255,0.6); margin-bottom: 40px; position: relative; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark); color: rgba(255,255,255,0.5);
+      padding: 64px 5vw 36px;
+    }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand-name { font-family: 'Fredoka One', cursive; font-size: 28px; color: var(--green); margin-bottom: 12px; }
+    .footer-brand-desc { font-size: 13px; line-height: 1.7; max-width: 280px; }
+    .footer-brand-copy { font-size: 12px; margin-top: 16px; color: rgba(255,255,255,0.3); }
+    .footer-col-title { font-size: 13px; font-weight: 800; color: var(--white); letter-spacing: 0.5px; margin-bottom: 16px; text-transform: uppercase; }
+    .footer-col a { display: block; font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; margin-bottom: 9px; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--green); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom-left { font-size: 12px; }
+    .footer-bottom-right { display: flex; gap: 20px; }
+    .footer-bottom-right a { font-size: 12px; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+    .footer-bottom-right a:hover { color: var(--green); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .problem-grid, .aba-inner, .privacy-inner { grid-template-columns: 1fr; }
+      .levels-grid { grid-template-columns: 1fr 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .pricing-card.featured { transform: scale(1); }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .hero-stats { gap: 28px; }
+    }
+    @media (max-width: 480px) {
+      .levels-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      .privacy-badges { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow { animation: fadeUp 0.6s ease both; }
+    .hero-title   { animation: fadeUp 0.6s ease 0.1s both; }
+    .hero-sub     { animation: fadeUp 0.6s ease 0.2s both; }
+    .hero-btns    { animation: fadeUp 0.6s ease 0.3s both; }
+    .hero-stats   { animation: fadeUp 0.6s ease 0.4s both; }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg width="38" height="33" viewBox="0 0 50 44">
+      <path d="M25 6 Q42 6 48 20 Q42 34 25 34 Q8 34 2 20 Q8 6 25 6Z" fill="none" stroke="#5AAB2A" stroke-width="2" stroke-linecap="round"/>
+      <path d="M11 34 L4 46 L22 34" fill="#5AAB2A"/>
+      <circle cx="25" cy="20" r="10" fill="none" stroke="#5AAB2A" stroke-width="2"/>
+      <circle cx="25" cy="20" r="4.5" fill="#5AAB2A"/>
+      <circle cx="28.5" cy="17" r="1.6" fill="#fff"/>
+    </svg>
+    <span class="nav-logo-text">SaySee©</span>
+  </a>
+  <div class="nav-links">
+    <a href="#how">How It Works</a>
+    <a href="#unique">Why SaySee©</a>
+    <a href="#aba">ABA Approach</a>
+    <a href="#pricing">Pricing</a>
+    <a href="https://saysee.io" class="nav-cta">Start Free Trial</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="top">
+  <div class="hero-eyebrow">Introducing SaySee© — Now Available</div>
+  <h1 class="hero-title">
+    The classroom just got a<br/>
+    <em>voice-activated co-teacher</em>
+  </h1>
+  <p class="hero-sub">
+    SaySee© listens as you teach and automatically displays the right visual support for every student — at their individual learning level — without ever interrupting your flow.
+  </p>
+  <div class="hero-btns">
+    <a href="https://saysee.io" class="btn-primary">Start Your 7-Day Free Trial</a>
+    <a href="mailto:hello@saysee.io" class="btn-outline">Request a District Demo</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">4</div>
+      <div class="hero-stat-label">Learning levels per student</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">28</div>
+      <div class="hero-stat-label">Students per classroom</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">100%</div>
+      <div class="hero-stat-label">FERPA compliant</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">ABA</div>
+      <div class="hero-stat-label">Applied Behavior Analysis foundation</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROBLEM ── -->
+<section class="problem" id="problem">
+  <div class="problem-grid">
+    <div>
+      <div class="section-label">A New Approach</div>
+      <h2 class="section-title">Visual learning support that <em>travels everywhere a student goes</em></h2>
+      <p class="section-sub">
+        Students with disabilities need consistent visual support across every environment — school, home, community, and beyond. SaySee© was built to make that possible for the first time, on a device every family already has.
+      </p>
+    </div>
+    <div class="problem-cards">
+      <div class="problem-card good">
+        <div class="problem-card-icon">🌍</div>
+        <div class="problem-card-title">Generalization across all environments</div>
+        <div class="problem-card-desc">True learning happens when skills generalize beyond the classroom. SaySee© works on any smartphone — so the same visual supports a student receives at school are available at home, in the community, at church, and everywhere in between.</div>
+      </div>
+      <div class="problem-card good">
+        <div class="problem-card-icon">💬</div>
+        <div class="problem-card-title">Full verbal behavior support — beyond requesting</div>
+        <div class="problem-card-desc">Icon exchange systems support requesting (manding). SaySee© supports the full verbal behavior framework — mands, tacts, intraverbals, and listener responding — building complete, functional communication across all contexts.</div>
+      </div>
+      <div class="problem-card good">
+        <div class="problem-card-icon">👁️</div>
+        <div class="problem-card-title">Affordable, accessible, and always available</div>
+        <div class="problem-card-desc">SaySee© runs on the phone already in a teacher's pocket or a parent's hand. No procurement process. No clinical prescription. No extra device to carry. Just open the app and teach naturally.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section class="how" id="how">
+  <div class="how-inner">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">Teach naturally.<br/><em>SaySee does the rest.</em></h2>
+    <p class="section-sub">No extra steps. No interruptions. Just teach — and SaySee listens, matches, displays, and learns alongside you.</p>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="how-step-num">1</div>
+        <div class="how-step-icon">🎤</div>
+        <div class="how-step-title">Teacher speaks naturally</div>
+        <div class="how-step-desc">Hang your phone around your neck. SaySee listens continuously in the background — no tapping required.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">2</div>
+        <div class="how-step-icon">🧠</div>
+        <div class="how-step-title">AI matches the word</div>
+        <div class="how-step-desc">SaySee recognizes the instruction — and understands synonyms. "Take a seat" matches "sit down" automatically.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">3</div>
+        <div class="how-step-icon">🖼️</div>
+        <div class="how-step-title">Visual displays instantly</div>
+        <div class="how-step-desc">The right visual appears full-screen at each student's individual learning level — photo, color art, B&W, or text.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">4</div>
+        <div class="how-step-icon">📈</div>
+        <div class="how-step-title">AI tracks & advances levels</div>
+        <div class="how-step-desc">Praise detected → correct response logged. After 3 successes, the student's level automatically advances. Data collected without lifting a finger.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LEVELS ── -->
+<section class="levels" id="levels">
+  <div class="levels-inner">
+    <div class="section-label" style="color:var(--green)">The Four-Level System</div>
+    <h2 class="section-title">From concrete to abstract — <em>the science of fading</em></h2>
+    <p class="section-sub" style="color:rgba(255,255,255,0.6)">
+      SaySee©'s four-level visual progression mirrors the stimulus fading procedures used in Applied Behavior Analysis — systematically transferring stimulus control from a real photograph to text-only as students develop symbolic understanding.
+    </p>
+    <div class="levels-grid">
+      <div class="level-card l1">
+        <div class="level-num">Level 1</div>
+        <div class="level-icon">📷</div>
+        <div class="level-title">Real Photo</div>
+        <div class="level-desc">A teacher-captured photograph from the student's actual environment. Their real chair. Their actual cafeteria. Maximum concrete relevance.</div>
+        <div class="level-aba">ABA: Most-to-least prompting · Concrete stimulus</div>
+      </div>
+      <div class="level-card l2">
+        <div class="level-num">Level 2</div>
+        <div class="level-icon">🎨</div>
+        <div class="level-title">Color Art</div>
+        <div class="level-desc">A colorful symbolic illustration. Introduces abstraction while maintaining strong visual clarity and color-based discrimination.</div>
+        <div class="level-aba">ABA: Stimulus fading · Symbolic representation</div>
+      </div>
+      <div class="level-card l3">
+        <div class="level-num">Level 3</div>
+        <div class="level-icon">✏️</div>
+        <div class="level-title">B&W Sketch</div>
+        <div class="level-desc">Black and white line art removes color as a prompt, building tolerance for reduced visual information toward text.</div>
+        <div class="level-aba">ABA: Prompt fading · Reduced visual detail</div>
+      </div>
+      <div class="level-card l4">
+        <div class="level-num">Level 4</div>
+        <div class="level-icon">🔤</div>
+        <div class="level-title">Text Only</div>
+        <div class="level-desc">The written word alone — representing full symbolic independence and emergent literacy. The ultimate goal.</div>
+        <div class="level-aba">ABA: Independent stimulus control · Literacy readiness</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── UNIQUE ── -->
+<section class="unique" id="unique">
+  <div class="unique-inner">
+    <div class="section-label">What Makes SaySee© Different</div>
+    <h2 class="section-title">Five innovations that <em>don't exist</em> anywhere else</h2>
+    <p class="section-sub">SaySee© was designed from the ground up by a special education expert — not retrofitted from a data tool. Every feature exists because of a real gap in how students are supported today.</p>
+    <div class="unique-grid">
+      <div class="unique-card featured">
+        <div class="unique-icon">🎤</div>
+        <div class="unique-title">Passive Voice Activation</div>
+        <div class="unique-desc">SaySee© is the only AAC tool that listens passively to natural teacher speech and displays visuals automatically — without any button presses, screen taps, or interruption to instruction. The teacher simply teaches.</div>
+      </div>
+      <div class="unique-card featured">
+        <div class="unique-icon">📐</div>
+        <div class="unique-title">Individual Level Per Word Per Student</div>
+        <div class="unique-desc">Every student has their own learning level for every word — automatically advanced after 3 correct responses or adjusted back when struggling. No other tool personalizes at this granularity.</div>
+      </div>
+      <div class="unique-card featured">
+        <div class="unique-icon">🌍</div>
+        <div class="unique-title">Designed for Every Environment</div>
+        <div class="unique-desc">SaySee© runs on any smartphone. The same app a teacher uses in the classroom is the app a parent uses at the grocery store, at church, or at a family gathering. Visual support that actually travels with the student.</div>
+      </div>
+      <div class="unique-card">
+        <div class="unique-icon">🤖</div>
+        <div class="unique-title">Autonomous AI Scaffolding Engine</div>
+        <div class="unique-desc">Detects praise words, logs correct responses, measures response time, advances levels, and suggests new vocabulary — all without the teacher touching the device. The AI does not pull or transmit student information. No student data ever leaves the SaySee© platform under any circumstance.</div>
+      </div>
+      <div class="unique-card">
+        <div class="unique-icon">💬</div>
+        <div class="unique-title">Beyond Manding</div>
+        <div class="unique-desc">Icon exchange systems and most existing AAC tools support only requesting (manding). SaySee© supports the full verbal behavior framework — mands, tacts, intraverbals, and listener responding — building complete, functional communication across all environments and communication partners.</div>
+      </div>
+      <div class="unique-card">
+        <div class="unique-icon">🏠</div>
+        <div class="unique-title">Family & Community Inclusion</div>
+        <div class="unique-desc">Parents, aides, and support staff get read-only access to the student's exact word set and level. For the first time, the same visual supports used in school follow the student everywhere — normalizing communication support in public.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABA ── -->
+<section class="aba" id="aba">
+  <div class="aba-inner">
+    <div>
+      <div class="section-label">Applied Behavior Analysis Foundation</div>
+      <h2 class="section-title">Built on the <em>science of learning</em></h2>
+      <p class="section-sub">
+        SaySee© was conceived and designed by a special education expert with deep roots in Applied Behavior Analysis. Every feature — from the 4-level progression to the praise detection system — is grounded in evidence-based ABA principles, not convenience.
+      </p>
+    </div>
+    <div class="aba-principles">
+      <div class="aba-principle">
+        <div class="aba-principle-icon">📌</div>
+        <div>
+          <div class="aba-principle-title">Stimulus Fading</div>
+          <div class="aba-principle-desc">The 4-level progression systematically removes visual prompts as students demonstrate mastery, transferring stimulus control from concrete photographs to abstract text.</div>
+        </div>
+      </div>
+      <div class="aba-principle">
+        <div class="aba-principle-icon">✅</div>
+        <div>
+          <div class="aba-principle-title">Errorless Learning</div>
+          <div class="aba-principle-desc">Students are always shown the correct visual support at their current level — preventing error patterns and building confidence through supported success.</div>
+        </div>
+      </div>
+      <div class="aba-principle">
+        <div class="aba-principle-icon">🗣️</div>
+        <div>
+          <div class="aba-principle-title">Verbal Behavior Framework</div>
+          <div class="aba-principle-desc">Word categories and instructional structure support all verbal operants: mands, tacts, intraverbals, and listener responding — not just requesting.</div>
+        </div>
+      </div>
+      <div class="aba-principle">
+        <div class="aba-principle-icon">🌐</div>
+        <div>
+          <div class="aba-principle-title">Naturalistic Environment Teaching</div>
+          <div class="aba-principle-desc">SaySee© works in every environment where language occurs — embedding visual supports into natural routines across school, home, and community.</div>
+        </div>
+      </div>
+      <div class="aba-principle">
+        <div class="aba-principle-icon">📊</div>
+        <div>
+          <div class="aba-principle-title">Data-Driven Instruction</div>
+          <div class="aba-principle-desc">Every session automatically logs trial data — correct responses, response times, and level changes — providing the evidence base required for IEP documentation.</div>
+        </div>
+      </div>
+      <div class="aba-principle">
+        <div class="aba-principle-icon">🎯</div>
+        <div>
+          <div class="aba-principle-title">Differential Reinforcement</div>
+          <div class="aba-principle-desc">The AI detects praise language from the teacher as a natural consequence, using it to identify reinforced responses and drive level progression decisions.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── AI ── -->
+<section class="ai-section" id="ai">
+  <div class="ai-inner">
+    <div class="section-label">AI Scaffolding Engine</div>
+    <h2 class="section-title">An autonomous co-teacher that <em>never stops learning</em></h2>
+    <p class="section-sub">SaySee©'s AI engine runs silently in the background — tracking, adjusting, and improving without any extra effort from the teacher. Student information is never accessed, stored, or transmitted by the AI. All processing uses only anonymous classroom phrases — student data never leaves the SaySee© platform.</p>
+    <div class="ai-grid">
+      <div class="ai-card">
+        <div class="ai-card-icon">⏱️</div>
+        <div>
+          <div class="ai-card-title">Response Time Measurement</div>
+          <div class="ai-card-desc">A timer starts the moment an instruction is detected, measuring latency to response for each student.</div>
+        </div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-icon">🎉</div>
+        <div>
+          <div class="ai-card-title">Praise Detection</div>
+          <div class="ai-card-desc">Detects natural praise phrases — "good job," "great work," "yes," "excellent" — and logs them as correct responses.</div>
+        </div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-icon">👤</div>
+        <div>
+          <div class="ai-card-title">Student Name Detection</div>
+          <div class="ai-card-desc">Hears a student's name in the instruction and automatically switches to that student's profile and level.</div>
+        </div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-icon">🧠</div>
+        <div>
+          <div class="ai-card-title">Semantic Matching</div>
+          <div class="ai-card-desc">"Take a seat" → "sit down." Understanding meaning, not just keywords — for more natural classroom use.</div>
+        </div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-icon">💡</div>
+        <div>
+          <div class="ai-card-title">Vocabulary Suggestions</div>
+          <div class="ai-card-desc">Phrases heard frequently that don't match any word are automatically suggested for the teacher to add to the library.</div>
+        </div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-card-icon">🔒</div>
+        <div>
+          <div class="ai-card-title">FERPA-Safe AI</div>
+          <div class="ai-card-desc">All student names are stripped before any AI processing. Only anonymous phrases reach external services. Student data never leaves the SaySee© platform.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHO ── -->
+<section class="who" id="who">
+  <div class="who-inner">
+    <div class="section-label">Who SaySee© Is For</div>
+    <h2 class="section-title">Built for every adult <em>who supports a learner</em></h2>
+    <p class="section-sub">SaySee© is designed to travel with the student — so every person in their life can provide consistent visual support.</p>
+    <div class="who-grid">
+      <div class="who-card">
+        <div class="who-icon">👩‍🏫</div>
+        <div class="who-title">Special Education Teachers</div>
+        <div class="who-desc">Full classroom management with per-student level tracking and automatic data collection.</div>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">🧑‍💼</div>
+        <div class="who-title">Paraprofessionals</div>
+        <div class="who-desc">Locked aide mode — consistent visuals without the ability to change settings.</div>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">🗣️</div>
+        <div class="who-title">Speech-Language Pathologists</div>
+        <div class="who-desc">Verbal behavior-aligned word categories with response data for progress monitoring.</div>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">📋</div>
+        <div class="who-title">ABA Therapists & RBTs</div>
+        <div class="who-desc">Trial-by-trial data, level tracking, and IEP-aligned goal monitoring built in.</div>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">👨‍👩‍👧</div>
+        <div class="who-title">Parents & Families</div>
+        <div class="who-desc">Read-only access to their student's word set — same visuals at home as school.</div>
+      </div>
+      <div class="who-card">
+        <div class="who-icon">🌍</div>
+        <div class="who-title">General Education Teachers</div>
+        <div class="who-desc">Visual support for English language learners and students with diverse learning needs in inclusive classrooms.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRIVACY ── -->
+<section class="privacy" id="privacy">
+  <div class="privacy-inner">
+    <div>
+      <div class="section-label">Privacy & Compliance</div>
+      <h2 class="section-title">Student data protected at <em>every layer</em></h2>
+      <p class="section-sub">
+        SaySee© was built for schools — which means privacy isn't an afterthought, it's a design principle. Student identifying information never touches external AI services. No advertising. No data selling. Ever.
+      </p>
+      <p style="font-size:14px; color:var(--mid); line-height:1.75; margin-bottom:16px;">
+        <strong style="color:var(--blue);">The AI does not access student information — ever.</strong> Student names, progress records, uploaded photos, and learning data are never sent to, accessed by, or processed by any AI service. The AI receives only an anonymous classroom phrase (example: "please sit down") and returns only a matching word. Nothing more.
+      </p>
+      <p style="font-size:14px; color:var(--mid); line-height:1.75; margin-bottom:20px;">
+        All student profiles, progress data, and uploaded photos are stored exclusively in SaySee©'s secure, encrypted database — accessible only to the authorized teacher and district administrator. Student data never leaves the SaySee© platform.
+      </p>
+      <p style="font-size:14px; color:var(--mid); line-height:1.75;">
+        Data Processing Agreements are available for district contracts. Contact <a href="mailto:hello@saysee.io" style="color:var(--blue); font-weight:700;">hello@saysee.io</a> to request documentation.
+      </p>
+    </div>
+    <div class="privacy-badges">
+      <div class="privacy-badge">
+        <div class="privacy-badge-icon">🔒</div>
+        <div class="privacy-badge-title">FERPA Compliant</div>
+      </div>
+      <div class="privacy-badge">
+        <div class="privacy-badge-icon">👶</div>
+        <div class="privacy-badge-title">COPPA Compliant</div>
+      </div>
+      <div class="privacy-badge">
+        <div class="privacy-badge-icon">🌅</div>
+        <div class="privacy-badge-title">CA SOPIPA Compliant</div>
+      </div>
+      <div class="privacy-badge">
+        <div class="privacy-badge-icon">🚫</div>
+        <div class="privacy-badge-title">No Ads. No Data Sales.</div>
+      </div>
+      <div class="privacy-badge">
+        <div class="privacy-badge-icon">🔐</div>
+        <div class="privacy-badge-title">AES-256 Encryption</div>
+      </div>
+      <div class="privacy-badge">
+        <div class="privacy-badge-icon">📋</div>
+        <div class="privacy-badge-title">Data Processing Agreement Available</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRICING ── -->
+<section class="pricing" id="pricing">
+  <div class="pricing-inner">
+    <div class="section-label" style="text-align:center">Pricing</div>
+    <h2 class="section-title" style="text-align:center">Affordable for every classroom.<br/><em>Scalable for every district.</em></h2>
+    <p style="font-size:16px; color:var(--mid); margin-bottom:0; text-align:center;">Start with a 7-day free trial. No credit card required.</p>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-name">Monthly</div>
+        <div class="pricing-price">$28</div>
+        <div class="pricing-per">per teacher / month</div>
+        <ul class="pricing-features">
+          <li class="pricing-feature">Up to 28 students</li>
+          <li class="pricing-feature">All word categories</li>
+          <li class="pricing-feature">AI auto-leveling</li>
+          <li class="pricing-feature">Parent read-only access</li>
+          <li class="pricing-feature">Student data & progress</li>
+          <li class="pricing-feature">Cancel anytime</li>
+        </ul>
+        <button class="pricing-btn pricing-btn-secondary" onclick="window.location='https://saysee.io'">Start Free Trial</button>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-badge">BEST VALUE — SAVE 25%</div>
+        <div class="pricing-name">Annual</div>
+        <div class="pricing-price">$252</div>
+        <div class="pricing-per">per teacher / year · $21/mo</div>
+        <ul class="pricing-features">
+          <li class="pricing-feature">Everything in Monthly</li>
+          <li class="pricing-feature">Priority support</li>
+          <li class="pricing-feature">Early feature access</li>
+          <li class="pricing-feature">Annual invoice for PO</li>
+          <li class="pricing-feature">7-day free trial included</li>
+        </ul>
+        <button class="pricing-btn pricing-btn-primary" onclick="window.location='https://saysee.io'">Start Free Trial</button>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-name">School Site</div>
+        <div class="pricing-price" style="font-size:36px; color:var(--green);">Custom</div>
+        <div class="pricing-per">district / school pricing</div>
+        <ul class="pricing-features">
+          <li class="pricing-feature">Unlimited teachers</li>
+          <li class="pricing-feature">District admin dashboard</li>
+          <li class="pricing-feature">License management</li>
+          <li class="pricing-feature">District-wide reporting</li>
+          <li class="pricing-feature">Data Processing Agreement</li>
+          <li class="pricing-feature">Dedicated onboarding</li>
+        </ul>
+        <button class="pricing-btn pricing-btn-secondary" onclick="window.location='mailto:hello@saysee.io'" style="background:var(--green);">Contact Us</button>
+      </div>
+    </div>
+    <p class="pricing-note">All plans include a 7-day free trial. Questions? Email <a href="mailto:hello@saysee.io" style="color:var(--blue); font-weight:700;">hello@saysee.io</a></p>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section" id="cta">
+  <h2 class="cta-title">Every student deserves a<br/><em>visual learning environment</em></h2>
+  <p class="cta-sub">Join teachers using SaySee© to support students with disabilities, English language learners, and every student who benefits from visual support.</p>
+  <div class="cta-btns">
+    <a href="https://saysee.io" class="btn-primary">Start Your 7-Day Free Trial</a>
+    <a href="mailto:hello@saysee.io" class="btn-outline">Contact Us</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">SaySee©</div>
+        <p class="footer-brand-desc">
+          The first voice-activated AAC visual learning platform built on Applied Behavior Analysis principles. Designed for special education, English language learners, and every student who benefits from visual support.
+        </p>
+        <p class="footer-brand-copy">
+          © 2026 SaySee LLC. All rights reserved.<br/>
+          Patent pending.
+        </p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Product</div>
+        <a href="#how">How It Works</a>
+        <a href="#levels">The 4 Levels</a>
+        <a href="#unique">Why SaySee©</a>
+        <a href="#ai">AI Engine</a>
+        <a href="#pricing">Pricing</a>
+        <a href="https://saysee.io">Launch App</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">For Schools</div>
+        <a href="mailto:hello@saysee.io">District Demo</a>
+        <a href="mailto:hello@saysee.io">Site Licenses</a>
+        <a href="mailto:hello@saysee.io">Data Processing Agreement</a>
+        <a href="#privacy">FERPA Compliance</a>
+        <a href="#who">Who It's For</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <a href="mailto:hello@saysee.io">Contact Us</a>
+        <a href="mailto:hello@saysee.io">hello@saysee.io</a>
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#privacy">Terms of Service</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">
+        SaySee LLC &nbsp;·&nbsp; 28 Geary St Suite 650 PMB 70334, San Francisco, CA 94108 &nbsp;·&nbsp;
+        <a href="mailto:hello@saysee.io" style="color:rgba(255,255,255,0.4); text-decoration:none;">hello@saysee.io</a>
+        &nbsp;·&nbsp; © 2026 SaySee LLC. All rights reserved. &nbsp;·&nbsp; Patent Pending.
+      </div>
+      <div class="footer-bottom-right">
+        <a href="#privacy">Privacy</a>
+        <a href="#privacy">Terms</a>
+        <a href="#privacy">FERPA</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
