@@ -494,7 +494,7 @@
   </p>
   <div class="hero-btns">
     <a href="https://saysee.io" class="btn-primary">Start Your 7-Day Free Trial</a>
-    <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ16EIUWe8_HgVVf16_CMn3kz9bGrLfQRWAK9Fh2R8D01uwdJ-6jsP_xMFtmuhEuuQK0CqiIeX8a?gv=true" target="_blank" rel="noopener" class="btn-outline" style="text-decoration:none;">📅 Book a District Demo</a>
+    <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ32igLNjAkl4hoXES3YbzQsfd1Vsfnug5KStJD9rc3E-U6xVYGI-98OeIO-zVeCoV5VpXcyaRlP?gv=true" target="_blank" rel="noopener" class="btn-outline" style="text-decoration:none;">📅 Book a District Demo</a>
   </div>
   <div class="hero-stats">
     <div class="hero-stat">
@@ -988,8 +988,14 @@
       <!-- Contact col -->
       <div class="footer-col">
         <div class="footer-col-title">Contact</div>
-        <a href="mailto:hello@saysee.io" style="color:var(--green) !important;font-weight:800;font-size:15px;">hello@saysee.io</a>
-        <span style="color:rgba(255,255,255,0.25);font-size:11px;display:block;margin:4px 0 12px;">Tap to email us</span>
+        <a href="#" onclick="openContact('');return false;" style="color:var(--green) !important;font-weight:800;font-size:15px;">hello@saysee.io</a>
+        <span style="color:rgba(255,255,255,0.25);font-size:11px;display:block;margin:4px 0 6px;">Tap to send a message</span>
+        <button onclick="copyEmail()" id="copy-email-btn"
+          style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);
+          color:rgba(255,255,255,0.5);font-family:'Nunito',sans-serif;font-size:11px;
+          font-weight:700;padding:4px 12px;border-radius:20px;cursor:pointer;margin-bottom:12px;">
+          📋 Copy Email
+        </button>
         <span style="color:rgba(255,255,255,0.3);font-size:11px;line-height:1.8;display:block;">
           SaySee LLC<br/>
           28 Geary St Suite 650<br/>
@@ -1361,6 +1367,27 @@ document.getElementById('site-modal').addEventListener('click', function(e) {
   if(e.target === this) { this.classList.remove('active'); document.body.style.overflow = ''; }
 });
 
+// ── Copy Email to Clipboard ───────────────────────────────────
+function copyEmail() {
+  var email = 'hello@saysee.io';
+  if(navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(email).then(function() {
+      var btn = document.getElementById('copy-email-btn');
+      if(btn) { btn.innerText = '✅ Copied!'; setTimeout(function(){ btn.innerText = '📋 Copy Email'; }, 2000); }
+    });
+  } else {
+    // Fallback for older browsers
+    var ta = document.createElement('textarea');
+    ta.value = email;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    var btn = document.getElementById('copy-email-btn');
+    if(btn) { btn.innerText = '✅ Copied!'; setTimeout(function(){ btn.innerText = '📋 Copy Email'; }, 2000); }
+  }
+}
+
 // ── Simple Contact Message (hello@saysee.io links) ────────────
 // Already handled by openContact() — small message form
 
@@ -1395,15 +1422,14 @@ function goToStripe(plan) {
 
 <script>
 (function() {
+  var target = document.getElementById('cal-btn-footer');
   window.addEventListener('load', function() {
-    // Footer District Demo button
-    var footerTarget = document.getElementById('cal-btn-footer');
-    if(footerTarget && window.calendar && window.calendar.schedulingButton) {
+    if(target && window.calendar && window.calendar.schedulingButton) {
       calendar.schedulingButton.load({
-        url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ16EIUWe8_HgVVf16_CMn3kz9bGrLfQRWAK9Fh2R8D01uwdJ-6jsP_xMFtmuhEuuQK0CqiIeX8a?gv=true',
-        color: '#5AAB2A',
-        label: '📅 Book a Demo',
-        target: footerTarget,
+        url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ32igLNjAkl4hoXES3YbzQsfd1Vsfnug5KStJD9rc3E-U6xVYGI-98OeIO-zVeCoV5VpXcyaRlP?gv=true',
+        color: '#039BE5',
+        label: 'Book Demo',
+        target,
       });
     }
   });
@@ -1411,4 +1437,3 @@ function goToStripe(plan) {
 </script>
 </body>
 </html>
-
