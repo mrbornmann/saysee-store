@@ -392,7 +392,72 @@
     .hero-sub     { animation: fadeUp 0.6s ease 0.2s both; }
     .hero-btns    { animation: fadeUp 0.6s ease 0.3s both; }
     .hero-stats   { animation: fadeUp 0.6s ease 0.4s both; }
-  </style>
+  
+    /* ── CONTACT MODAL ── */
+    .modal-overlay {
+      display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6);
+      z-index:9999; align-items:center; justify-content:center; padding:20px;
+    }
+    .modal-overlay.active { display:flex; }
+    .modal-box {
+      background:#fff; border-radius:24px; padding:40px; max-width:480px;
+      width:100%; box-shadow:0 24px 60px rgba(0,0,0,0.2); position:relative;
+    }
+    .modal-close {
+      position:absolute; top:16px; right:20px; background:none; border:none;
+      font-size:24px; cursor:pointer; color:#AAA; line-height:1;
+    }
+    .modal-title { font-family:'Fredoka One',cursive; font-size:26px; color:var(--blue); margin-bottom:6px; }
+    .modal-sub { font-size:14px; color:#888; margin-bottom:20px; line-height:1.6; }
+    .modal-email-box {
+      background:#EEF5FF; border-radius:14px; padding:16px 20px;
+      margin-bottom:20px; text-align:center;
+    }
+    .modal-email-box a {
+      font-family:'Fredoka One',cursive; font-size:22px; color:var(--blue);
+      text-decoration:none; display:block;
+    }
+    .modal-email-box span { font-size:12px; color:#AAA; display:block; margin-top:4px; }
+    .modal-form input, .modal-form textarea, .modal-form select {
+      width:100%; padding:12px 16px; border:2px solid #E8ECF0; border-radius:12px;
+      font-family:'Nunito',sans-serif; font-size:14px; margin-bottom:12px;
+      outline:none; transition:border 0.2s; box-sizing:border-box;
+    }
+    .modal-form input:focus, .modal-form textarea:focus, .modal-form select:focus {
+      border-color:var(--blue);
+    }
+    .modal-form textarea { height:100px; resize:none; }
+    .modal-submit {
+      width:100%; padding:14px; border-radius:30px; border:none;
+      background:var(--blue); color:#fff; font-family:'Nunito',sans-serif;
+      font-weight:900; font-size:16px; cursor:pointer;
+    }
+    .modal-submit:hover { background:var(--blue-dark, #0E4A8F); }
+    .modal-success { text-align:center; padding:20px 0; }
+    .modal-success .check { font-size:48px; margin-bottom:12px; }
+    .modal-success p { font-family:'Nunito',sans-serif; font-size:15px; color:#555; }
+
+    /* ── PRIVACY PAGE ── */
+    #privacy-page {
+      display:none; position:fixed; inset:0; background:#fff;
+      z-index:9998; overflow-y:auto; padding:40px 5vw;
+    }
+    #privacy-page.active { display:block; }
+    .privacy-back {
+      display:inline-flex; align-items:center; gap:8px; margin-bottom:32px;
+      font-family:'Nunito',sans-serif; font-weight:800; font-size:14px;
+      color:var(--blue); cursor:pointer; text-decoration:none; border:none;
+      background:none; padding:0;
+    }
+    .privacy-content { max-width:760px; margin:0 auto; }
+    .privacy-content h1 { font-family:'Fredoka One',cursive; font-size:36px; color:var(--blue); margin-bottom:8px; }
+    .privacy-content h2 { font-family:'Fredoka One',cursive; font-size:22px; color:var(--dark); margin:28px 0 8px; }
+    .privacy-content p, .privacy-content li { font-family:'Nunito',sans-serif; font-size:15px; color:#555; line-height:1.8; }
+    .privacy-content ul { padding-left:20px; margin-bottom:12px; }
+</style>
+  <!-- Google Calendar Appointment Scheduling -->
+  <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
+  <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
 </head>
 <body>
 
@@ -429,7 +494,7 @@
   </p>
   <div class="hero-btns">
     <a href="https://saysee.io" class="btn-primary">Start Your 7-Day Free Trial</a>
-    <a href="mailto:hello@saysee.io" class="btn-outline">Request a District Demo</a>
+    <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ16EIUWe8_HgVVf16_CMn3kz9bGrLfQRWAK9Fh2R8D01uwdJ-6jsP_xMFtmuhEuuQK0CqiIeX8a?gv=true" target="_blank" rel="noopener" class="btn-outline" style="text-decoration:none;">📅 Book a District Demo</a>
   </div>
   <div class="hero-stats">
     <div class="hero-stat">
@@ -765,7 +830,7 @@
         All student profiles, progress data, and uploaded photos are stored exclusively in SaySee©'s secure, encrypted database — accessible only to the authorized teacher and district administrator. Student data never leaves the SaySee© platform.
       </p>
       <p style="font-size:14px; color:var(--mid); line-height:1.75;">
-        Data Processing Agreements are available for district contracts. Contact <a href="mailto:hello@saysee.io" style="color:var(--blue); font-weight:700;">hello@saysee.io</a> to request documentation.
+        Data Processing Agreements are available for district contracts. Contact <a href="#" onclick="openDPA();return false;" style="color:var(--blue); font-weight:700;">view our Data Processing Agreement</a> or <a href="#" onclick="openContact('ferpa');return false;" style="color:var(--blue);font-weight:700;">request documentation</a>.
       </p>
     </div>
     <div class="privacy-badges">
@@ -816,7 +881,8 @@
           <li class="pricing-feature">Student data & progress</li>
           <li class="pricing-feature">Cancel anytime</li>
         </ul>
-        <button class="pricing-btn pricing-btn-secondary" onclick="window.location='https://saysee.io'">Start Free Trial</button>
+        <a href="https://saysee.io" class="pricing-btn pricing-btn-secondary" style="display:block;text-align:center;text-decoration:none;margin-bottom:8px;">Start Free Trial</a>
+        <button class="pricing-btn" onclick="goToStripe('monthly')" style="background:var(--blue);color:#fff;width:100%;border:none;cursor:pointer;">Subscribe Now — $28/mo</button>
       </div>
       <div class="pricing-card featured">
         <div class="pricing-badge">BEST VALUE — SAVE 25%</div>
@@ -830,7 +896,8 @@
           <li class="pricing-feature">Annual invoice for PO</li>
           <li class="pricing-feature">7-day free trial included</li>
         </ul>
-        <button class="pricing-btn pricing-btn-primary" onclick="window.location='https://saysee.io'">Start Free Trial</button>
+        <a href="https://saysee.io" class="pricing-btn pricing-btn-primary" style="display:block;text-align:center;text-decoration:none;margin-bottom:8px;">Start Free Trial</a>
+        <button class="pricing-btn" onclick="goToStripe('annual')" style="background:#27AE60;color:#fff;width:100%;border:none;cursor:pointer;">Subscribe Now — $252/yr</button>
       </div>
       <div class="pricing-card">
         <div class="pricing-name">School Site</div>
@@ -844,10 +911,10 @@
           <li class="pricing-feature">Data Processing Agreement</li>
           <li class="pricing-feature">Dedicated onboarding</li>
         </ul>
-        <a href="mailto:hello@saysee.io" class="pricing-btn pricing-btn-secondary" style="background:var(--green);display:block;text-align:center;text-decoration:none;">Contact Us</a>
+        <button class="pricing-btn pricing-btn-secondary" onclick="openSiteLicense()" style="background:var(--green);color:#fff;width:100%;border:none;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:900;font-size:15px;padding:14px;border-radius:14px;">Learn More & Get a Quote</button>
       </div>
     </div>
-    <p class="pricing-note">All plans include a 7-day free trial. Questions? Email <a href="mailto:hello@saysee.io" style="color:var(--blue); font-weight:700;">hello@saysee.io</a></p>
+    <p class="pricing-note">All plans include a 7-day free trial. Questions? Email <a href="#" onclick="openContact('');return false;" style="color:var(--blue); font-weight:700;">hello@saysee.io</a></p>
   </div>
 </section>
 
@@ -857,22 +924,27 @@
   <p class="cta-sub">Join teachers using SaySee© to support students with disabilities, English language learners, and every student who benefits from visual support.</p>
   <div class="cta-btns">
     <a href="https://saysee.io" class="btn-primary">Start Your 7-Day Free Trial</a>
-    <a href="mailto:hello@saysee.io" class="btn-outline">✉️ hello@saysee.io</a>
+    <a href="#" onclick="openContact('');return false;" class="btn-outline">✉️ hello@saysee.io</a>
   </div>
 </section>
 
 <!-- ── FOOTER ── -->
 <!-- ── CONTACT BANNER ── -->
-<div style="background:#1B65B8;padding:32px 5vw;text-align:center;">
-  <div style="font-family:'Nunito',sans-serif;font-size:14px;color:rgba(255,255,255,0.7);margin-bottom:8px;letter-spacing:1px;text-transform:uppercase;font-weight:700;">Get in Touch</div>
-  <a href="mailto:hello@saysee.io" style="font-family:'Fredoka One',cursive;font-size:28px;color:#5AAB2A;text-decoration:none;letter-spacing:1px;">
-    hello@saysee.io
-  </a>
-  <div style="font-family:'Nunito',sans-serif;font-size:13px;color:rgba(255,255,255,0.5);margin-top:8px;">
-    Click to open in your email app · We reply within 24 hours
+<div style="background:linear-gradient(135deg,#1B4F9E,#1B65B8);padding:48px 5vw;text-align:center;">
+  <div style="font-family:'Nunito',sans-serif;font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:10px;letter-spacing:2px;text-transform:uppercase;font-weight:800;">Districts &amp; Schools</div>
+  <div style="font-family:'Fredoka One',cursive;font-size:32px;color:#fff;margin-bottom:10px;">Get a Quote for Your District</div>
+  <div style="font-family:'Nunito',sans-serif;font-size:15px;color:rgba(255,255,255,0.6);margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.7;">
+    Site licenses average student count across your district and can result in significant savings. Recommended for districts purchasing annual subscriptions with 10 or more teachers.
+  </div>
+  <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+    <button onclick="openQuoteForm()" style="padding:14px 32px;background:#5AAB2A;color:#fff;border:none;border-radius:30px;font-family:'Nunito',sans-serif;font-weight:900;font-size:15px;cursor:pointer;box-shadow:0 4px 20px rgba(90,171,42,0.4);">
+      📋 Get a Quote
+    </button>
+    <button onclick="openContact('')" style="padding:14px 32px;background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.4);border-radius:30px;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;cursor:pointer;">
+      ✉️ Send a Message
+    </button>
   </div>
 </div>
-
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
@@ -906,11 +978,11 @@
       <!-- Schools col -->
       <div class="footer-col">
         <div class="footer-col-title">For Schools</div>
-        <a href="mailto:hello@saysee.io">District Demo</a>
-        <a href="mailto:hello@saysee.io">Site Licenses</a>
-        <a href="mailto:hello@saysee.io">Data Processing Agreement</a>
-        <a href="#privacy">FERPA Compliance</a>
-        <a href="#privacy">Privacy Policy</a>
+        <span id="cal-btn-footer"></span>
+        <a href="#" onclick="openQuoteForm();return false;">Site Licenses</a>
+        <a href="#" onclick="openDPA();return false;">Data Processing Agreement</a>
+        <a href="#" onclick="openPrivacy();return false;">FERPA Compliance</a>
+        <a href="#" onclick="openPrivacy();return false;">Privacy Policy</a>
       </div>
 
       <!-- Contact col -->
@@ -933,18 +1005,410 @@
       <div class="footer-bottom-left">
         © 2026 SaySee LLC &nbsp;·&nbsp;
         Patent Pending — U.S. App. No. 64/086,776 &nbsp;·&nbsp;
-        <a href="mailto:hello@saysee.io" style="color:rgba(255,255,255,0.35);text-decoration:none;">hello@saysee.io</a>
+        <a href="#" onclick="openContact('');return false;" style="color:rgba(255,255,255,0.35);text-decoration:none;">hello@saysee.io</a>
       </div>
       <div class="footer-bottom-right">
-        <a href="#privacy">Privacy</a>
-        <a href="#privacy">FERPA</a>
-        <a href="mailto:hello@saysee.io">Contact</a>
+        <a href="#" onclick="openPrivacy();return false;">Privacy</a>
+        <a href="#" onclick="openPrivacy();return false;">FERPA</a>
+        <a href="#" onclick="openContact('');return false;">Contact</a>
         <a href="https://saysee.io">Launch App</a>
       </div>
     </div>
   </div>
 </footer>
 
+
+<!-- ── QUOTE FORM MODAL ── -->
+<div class="modal-overlay" id="quote-modal">
+  <div class="modal-box" style="max-width:540px;">
+    <button class="modal-close" onclick="closeQuoteForm()">&times;</button>
+    <div class="modal-title">📋 Get a Quote for Your District</div>
+    <p class="modal-sub">Site licenses average student count across your site and can result in significant savings. Fill out the form below and we'll send a custom quote within 24 hours.</p>
+    <div class="modal-form" id="quote-form">
+      <input type="text" id="qf-district" placeholder="District or Agency Name *" />
+      <input type="text" id="qf-name" placeholder="Your Name *" />
+      <input type="email" id="qf-email" placeholder="Your Email *" />
+      <input type="tel" id="qf-phone" placeholder="Phone (optional)" />
+      <input type="number" id="qf-teachers" placeholder="Number of Teachers *" min="1" />
+      <input type="number" id="qf-students" placeholder="Estimated Number of Students *" min="1" />
+      <select id="qf-type">
+        <option value="">Type of Organization</option>
+        <option value="public_district">Public School District</option>
+        <option value="charter">Charter School</option>
+        <option value="private">Private School</option>
+        <option value="aba_clinic">ABA Clinic / Therapy Center</option>
+        <option value="agency">Regional Agency / SELPA</option>
+        <option value="other">Other</option>
+      </select>
+      <textarea id="qf-notes" placeholder="Any additional details or questions..."></textarea>
+      <button class="modal-submit" onclick="submitQuote()">Send Quote Request</button>
+    </div>
+    <div class="modal-success" id="quote-success" style="display:none;">
+      <div class="check">📋</div>
+      <p><strong>Quote request received!</strong><br/>We'll send a custom quote to your email within 24 hours.<br/>Questions? Email <a href="#" onclick="openContact('');return false;" style="color:var(--blue);">hello@saysee.io</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ── SITE LICENSE INFO MODAL ── -->
+<div class="modal-overlay" id="site-modal">
+  <div class="modal-box" style="max-width:520px;">
+    <button class="modal-close" onclick="document.getElementById('site-modal').classList.remove('active');document.body.style.overflow='';">&times;</button>
+    <div class="modal-title">🏫 Site License Pricing</div>
+    <p class="modal-sub">Designed for districts and organizations managing multiple teacher accounts.</p>
+    <div style="background:#EEF5FF;border-radius:14px;padding:20px;margin-bottom:16px;">
+      <div style="font-family:'Fredoka One',cursive;font-size:18px;color:var(--blue);margin-bottom:8px;">How Site Licensing Works</div>
+      <ul style="font-family:'Nunito',sans-serif;font-size:14px;color:#555;line-height:1.8;padding-left:18px;margin:0;">
+        <li>Site licenses <strong>average student count</strong> across all teachers in the organization</li>
+        <li>Teachers with fewer students balance out larger classrooms</li>
+        <li>Result: <strong>significant per-teacher savings</strong> compared to individual subscriptions</li>
+        <li>Includes District Admin panel for centralized management</li>
+        <li>Single annual invoice — district purchasing friendly</li>
+        <li>Data Processing Agreement included</li>
+        <li>Dedicated onboarding and support</li>
+      </ul>
+    </div>
+    <div style="background:#EAF3DE;border-radius:14px;padding:16px;margin-bottom:20px;">
+      <div style="font-family:'Nunito',sans-serif;font-size:13px;color:#3D8A1A;font-weight:800;">✅ Recommended when:</div>
+      <div style="font-family:'Nunito',sans-serif;font-size:13px;color:#555;margin-top:4px;line-height:1.7;">
+        Your organization has <strong>10 or more teachers</strong> purchasing annual subscriptions.
+        At 10 teachers, site licensing typically saves 20–40% over individual plans.
+      </div>
+    </div>
+    <button onclick="closeModal();openQuoteForm();" class="modal-submit">Get a Custom Quote →</button>
+  </div>
+</div>
+
+<!-- ── DPA MODAL ── -->
+<div class="modal-overlay" id="dpa-modal">
+  <div class="modal-box" style="max-width:680px;max-height:85vh;overflow-y:auto;">
+    <button class="modal-close" onclick="closeDPA()">&times;</button>
+    <div class="modal-title">📄 Data Processing Agreement</div>
+    <p class="modal-sub">SaySee LLC — Effective 2026 · For districts and educational institutions</p>
+    <div style="user-select:none;-webkit-user-select:none;pointer-events:none;" oncontextmenu="return false;">
+      <div style="font-family:'Nunito',sans-serif;font-size:13px;color:#555;line-height:1.9;">
+
+        <h3 style="font-family:'Fredoka One',cursive;color:var(--blue);font-size:16px;margin:20px 0 6px;">1. Parties</h3>
+        <p>This Data Processing Agreement ("DPA") is entered into between SaySee LLC ("Processor"), a California limited liability company located at 28 Geary St Suite 650 PMB 70334, San Francisco, CA 94108, and the subscribing educational institution ("Controller").</p>
+
+        <h3 style="font-family:'Fredoka One',cursive;color:var(--blue);font-size:16px;margin:20px 0 6px;">2. Purpose</h3>
+        <p>This DPA governs the processing of student education records and personal data by SaySee LLC on behalf of the Controller in connection with the SaySee© AAC Visual Learning Platform.</p>
+
+        <h3 style="font-family:'Fredoka One',cursive;color:var(--blue);font-size:16px;margin:20px 0 6px;">3. FERPA Compliance</h3>
+        <p>SaySee LLC agrees to:</p>
+        <ul><li>Use student education records only for the purpose of providing the SaySee© service</li>
+        <li>Not disclose student education records to third parties without authorization</li>
+        <li>Maintain the confidentiality of all student education records</li>
+        <li>Allow the Controller to review, correct, or delete student records upon request</li>
+        <li>Comply with all applicable provisions of FERPA (20 U.S.C. § 1232g)</li></ul>
+
+        <h3 style="font-family:'Fredoka One',cursive;color:var(--blue);font-size:16px;margin:20px 0 6px;">4. Data Security</h3>
+        <p>SaySee LLC implements the following security measures:</p>
+        <ul><li>All data encrypted in transit using TLS 1.2 or higher</li>
+        <li>All data encrypted at rest using AES-256</li>
+        <li>Private photo storage with time-limited signed URLs (7-day expiry)</li>
+        <li>Row-level security on all database tables</li>
+        <li>Access controls limiting data access to authorized personnel only</li>
+        <li>Regular security assessments and vulnerability monitoring</li></ul>
+
+        <h3 style="font-family:'Fredoka One',cursive;color:var(--blue);font-size:16px;margin:20px 0 6px;">5. Prohibited Uses</h3>
+        <p>SaySee LLC shall not:</p>
+        <ul><li>Sell student personal information to any third party</li>
+        <li>Use student data for targeted advertising or behavioral profiling</li>
+        <li>Disclose student data for any non-educational purpose</li>
+        <li>Retain student data beyond the termination of the service agreement</li>
+        <li>Transmit student identifying information to external AI services</li></ul>
+
+        <h3 style="font-family:'Fredoka One',cursive;color:var(--blue);font-size:16px;margin:20px 0 6px;">6. AI Processing</h3>
+        <p>The SaySee© platform uses AI for semantic word matching. Before any speech transcript is processed by external AI services, all student names and identifying information are removed and replaced with anonymous placeholders. No student data is transmitted to external AI services under any circumstance.</p>
+
+        <h3 style="font-family:'Fredoka One',cursive;color:var(--blue);font-size:16px;margin:20px 0 6px;">7. Subprocessors</h3>
+        <p>SaySee LLC uses the following subprocessors:</p>
+        <ul><li>Supabase Inc. — Database and file storage (SOC 2 compliant)</li>
+        <li>Vercel Inc. — Application hosting and delivery</li>
+        <li>Anthropic PBC — AI semantic matching (receives anonymized data only)</li>
+        <li>Stripe Inc. — Payment processing (no student data shared)</li></ul>
+
+        <h3 style="font-family:'Fredoka One',cursive;color:var(--blue);font-size:16px;margin:20px 0 6px;">8. Data Retention and Deletion</h3>
+        <p>Student data is retained only while the teacher account is active. Upon account termination, all associated student data is deleted within 30 days. The Controller may request immediate deletion at any time by contacting hello@saysee.io.</p>
+
+        <h3 style="font-family:'Fredoka One',cursive;color:var(--blue);font-size:16px;margin:20px 0 6px;">9. Breach Notification</h3>
+        <p>In the event of a data breach affecting student education records, SaySee LLC will notify the Controller within 72 hours of becoming aware of the breach, consistent with applicable law.</p>
+
+        <h3 style="font-family:'Fredoka One',cursive;color:var(--blue);font-size:16px;margin:20px 0 6px;">10. California SOPIPA Compliance</h3>
+        <p>SaySee LLC complies with the California Student Online Personal Information Protection Act. We do not sell student information, use student information for targeted advertising, or build profiles of students for non-educational purposes.</p>
+
+        <h3 style="font-family:'Fredoka One',cursive;color:var(--blue);font-size:16px;margin:20px 0 6px;">11. Governing Law</h3>
+        <p>This DPA is governed by the laws of the State of California. Any disputes shall be resolved in San Francisco County, California.</p>
+
+        <h3 style="font-family:'Fredoka One',cursive;color:var(--blue);font-size:16px;margin:20px 0 6px;">12. Contact</h3>
+        <p>For questions about this DPA or to request a signed copy for district records, contact:<br/>
+        <strong>SaySee LLC</strong><br/>
+        28 Geary St Suite 650 PMB 70334, San Francisco, CA 94108<br/>
+        hello@saysee.io</p>
+
+        <div style="background:#F8F9FC;border-radius:10px;padding:14px;margin-top:20px;font-size:11px;color:#AAA;line-height:1.7;">
+          © 2026 SaySee LLC. Patent Pending — U.S. Application No. 64/086,776. This document is protected by copyright and may not be reproduced without written permission from SaySee LLC.
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:20px;text-align:center;">
+      <button onclick="openContact('ferpa')" style="padding:12px 28px;background:var(--blue);color:#fff;border:none;border-radius:30px;font-family:'Nunito',sans-serif;font-weight:800;font-size:14px;cursor:pointer;">
+        Request a Signed Copy for Your District
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── CONTACT MODAL ── -->
+<div class="modal-overlay" id="contact-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-title">Get in Touch</div>
+    <p class="modal-sub">Send us a message or email us directly — we reply within 24 hours.</p>
+    <div class="modal-email-box">
+      <a href="#" onclick="openContact('');return false;">hello@saysee.io</a>
+      <span>Tap to open your email app</span>
+    </div>
+    <div class="modal-form" id="contact-form">
+      <input type="text" id="cf-name" placeholder="Your name" />
+      <input type="email" id="cf-email" placeholder="Your email" />
+      <select id="cf-subject">
+        <option value="">What can we help with?</option>
+        <option value="trial">Free Trial Question</option>
+        <option value="district">District / School Site License</option>
+        <option value="demo">Request a Demo</option>
+        <option value="ferpa">FERPA / Data Processing Agreement</option>
+        <option value="support">Technical Support</option>
+        <option value="other">Other</option>
+      </select>
+      <textarea id="cf-message" placeholder="Tell us more..."></textarea>
+      <button class="modal-submit" onclick="submitContact()">Send Message</button>
+    </div>
+    <div class="modal-success" id="contact-success" style="display:none;">
+      <div class="check">✅</div>
+      <p><strong>Message sent!</strong><br/>We'll reply to your email within 24 hours.<br/>You can also reach us at <a href="#" onclick="openContact('');return false;" style="color:var(--blue);">hello@saysee.io</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ── PRIVACY PAGE ── -->
+<div id="privacy-page">
+  <div class="privacy-content">
+    <button class="privacy-back" onclick="closePrivacy()">← Back to SaySee</button>
+    <h1>Privacy Policy & FERPA Compliance</h1>
+    <p style="color:#AAA;font-size:13px;">© 2026 SaySee LLC · Last updated June 2026 · Patent Pending — U.S. App. No. 64/086,776</p>
+
+    <h2>Who We Are</h2>
+    <p>SaySee LLC is an educational technology company based in San Francisco, California. We operate the SaySee© AAC Visual Learning Platform at saysee.io. Contact us at hello@saysee.io.</p>
+
+    <h2>What Data We Collect</h2>
+    <ul>
+      <li>Teacher account information: name, email address, password (encrypted)</li>
+      <li>Student first names or nicknames (no last names, no IDs required)</li>
+      <li>Student learning level data and response history</li>
+      <li>Photos uploaded by teachers from their classroom environment</li>
+      <li>Custom vocabulary words added by teachers</li>
+      <li>Subscription and billing information (processed by Stripe — we do not store card numbers)</li>
+    </ul>
+
+    <h2>FERPA Compliance</h2>
+    <p>SaySee© is designed for FERPA compliance. We operate as a "school official" under the FERPA school official exception when used by educational institutions. Specifically:</p>
+    <ul>
+      <li>Student education records are accessible only to the authorized teacher account</li>
+      <li>No student data is sold to any third party — ever</li>
+      <li>No student data is used for advertising or non-educational purposes</li>
+      <li>Data Processing Agreements are available for districts upon request</li>
+    </ul>
+
+    <h2>AI and Voice Processing</h2>
+    <p>SaySee© uses AI for semantic word matching. Before any speech is sent to AI services, all student names are removed and replaced with anonymous placeholders. No student identifying information is ever transmitted to AI services. Voice audio is never recorded or stored.</p>
+
+    <h2>Photo Storage</h2>
+    <p>Photos uploaded by teachers are stored in private, encrypted cloud storage. Photos are accessible only to the teacher who uploaded them via time-limited signed URLs. Photos are never publicly accessible.</p>
+
+    <h2>COPPA Compliance</h2>
+    <p>SaySee© does not collect data directly from children under 13. All data is collected from and managed by teachers and school officials. We operate under the COPPA school official exception.</p>
+
+    <h2>California SOPIPA Compliance</h2>
+    <p>SaySee© complies with California Student Online Personal Information Protection Act (SOPIPA). We do not sell student data, use student data for targeted advertising, or build profiles of students for non-educational purposes.</p>
+
+    <h2>Data Security</h2>
+    <ul>
+      <li>All data encrypted in transit (TLS/HTTPS)</li>
+      <li>All data encrypted at rest (AES-256)</li>
+      <li>Private photo storage with time-limited signed URLs</li>
+      <li>Row-level security on all database tables</li>
+    </ul>
+
+    <h2>Data Retention</h2>
+    <p>Data is retained while your account is active. Upon account closure, all data is deleted within 30 days. Contact hello@saysee.io to request deletion at any time.</p>
+
+    <h2>Your Rights</h2>
+    <ul>
+      <li>Access your data at any time through your account settings</li>
+      <li>Request deletion of your data and all associated student records</li>
+      <li>Export your data upon request</li>
+      <li>Request a Data Processing Agreement for your district</li>
+    </ul>
+
+    <h2>Contact</h2>
+    <p>For privacy questions, FERPA inquiries, or Data Processing Agreements:<br/>
+    <a href="#" onclick="openContact('');return false;" style="color:var(--blue);font-weight:700;">hello@saysee.io</a><br/>
+    SaySee LLC · 28 Geary St Suite 650 PMB 70334 · San Francisco, CA 94108</p>
+
+    <p style="margin-top:32px;font-size:12px;color:#CCC;">
+      © 2026 SaySee LLC. All rights reserved. Patent Pending — U.S. Application No. 64/086,776.
+    </p>
+  </div>
+</div>
+
+<script>
+// ── Contact Modal ──────────────────────────────────────────────
+function openContact(subject) {
+  document.getElementById('contact-modal').classList.add('active');
+  if(subject) document.getElementById('cf-subject').value = subject;
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('contact-modal').classList.remove('active');
+  document.body.style.overflow = '';
+  // Reset form
+  document.getElementById('contact-form').style.display = 'block';
+  document.getElementById('contact-success').style.display = 'none';
+}
+function submitContact() {
+  var name    = document.getElementById('cf-name').value.trim();
+  var email   = document.getElementById('cf-email').value.trim();
+  var subject = document.getElementById('cf-subject').value;
+  var message = document.getElementById('cf-message').value.trim();
+  if(!name || !email || !message) { alert('Please fill in your name, email, and message.'); return; }
+  // Open email client with pre-filled content
+  var mailSubject = encodeURIComponent('SaySee Inquiry: ' + (subject || 'General'));
+  var nl2 = '%0A';
+  var mailBodyStr = 'Name: ' + name + nl2 +
+    'Email: ' + email + nl2 +
+    'Subject: ' + subject + nl2 + nl2 +
+    message;
+  var mailBody = encodeURIComponent(mailBodyStr).replace(/%250A/g, nl2);
+  window.location.href = 'mailto:hello@saysee.io?subject=' + mailSubject + '&body=' + mailBody;
+  // Show success
+  document.getElementById('contact-form').style.display = 'none';
+  document.getElementById('contact-success').style.display = 'block';
+}
+// ── Quote Form ────────────────────────────────────────────────
+function openQuoteForm() {
+  document.getElementById('quote-modal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeQuoteForm() {
+  document.getElementById('quote-modal').classList.remove('active');
+  document.body.style.overflow = '';
+  document.getElementById('quote-form').style.display = 'block';
+  document.getElementById('quote-success').style.display = 'none';
+}
+function submitQuote() {
+  var district = document.getElementById('qf-district').value.trim();
+  var name     = document.getElementById('qf-name').value.trim();
+  var email    = document.getElementById('qf-email').value.trim();
+  var phone    = document.getElementById('qf-phone').value.trim();
+  var teachers = document.getElementById('qf-teachers').value.trim();
+  var students = document.getElementById('qf-students').value.trim();
+  var type     = document.getElementById('qf-type').value;
+  var notes    = document.getElementById('qf-notes').value.trim();
+  if(!district || !name || !email || !teachers || !students) {
+    alert('Please fill in all required fields.');
+    return;
+  }
+  var subject = encodeURIComponent('SaySee Site License Quote Request — ' + district);
+  var nl = '%0A';
+  var body = encodeURIComponent('QUOTE REQUEST') + nl + nl +
+    encodeURIComponent('District/Agency: ' + district) + nl +
+    encodeURIComponent('Contact Name: ' + name) + nl +
+    encodeURIComponent('Email: ' + email) + nl +
+    (phone ? encodeURIComponent('Phone: ' + phone) + nl : '') +
+    encodeURIComponent('Number of Teachers: ' + teachers) + nl +
+    encodeURIComponent('Number of Students: ' + students) + nl +
+    encodeURIComponent('Organization Type: ' + (type || 'Not specified')) + nl + nl +
+    (notes ? encodeURIComponent('Additional Notes: ' + notes) : '');
+  window.location.href = 'mailto:hello@saysee.io?subject=' + subject + '&body=' + body;
+  document.getElementById('quote-form').style.display = 'none';
+  document.getElementById('quote-success').style.display = 'block';
+}
+document.getElementById('quote-modal').addEventListener('click', function(e) {
+  if(e.target === this) closeQuoteForm();
+});
+
+// ── Site License Modal ─────────────────────────────────────────
+function openSiteLicense() {
+  document.getElementById('site-modal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+// ── DPA Modal ──────────────────────────────────────────────────
+function openDPA() {
+  document.getElementById('dpa-modal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeDPA() {
+  document.getElementById('dpa-modal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.getElementById('dpa-modal').addEventListener('click', function(e) {
+  if(e.target === this) closeDPA();
+});
+document.getElementById('site-modal').addEventListener('click', function(e) {
+  if(e.target === this) { this.classList.remove('active'); document.body.style.overflow = ''; }
+});
+
+// ── Simple Contact Message (hello@saysee.io links) ────────────
+// Already handled by openContact() — small message form
+
+// Close modal on overlay click
+document.getElementById('contact-modal').addEventListener('click', function(e) {
+  if(e.target === this) closeModal();
+});
+
+// ── Privacy Page ───────────────────────────────────────────────
+function openPrivacy() {
+  document.getElementById('privacy-page').classList.add('active');
+  window.scrollTo(0,0);
+  document.body.style.overflow = 'hidden';
+}
+function closePrivacy() {
+  document.getElementById('privacy-page').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// ── Stripe Payment Links ───────────────────────────────────────
+// These redirect to Stripe hosted checkout - no API key needed on website
+function goToStripe(plan) {
+  // Opens saysee.io with plan pre-selected
+  // When Stripe Payment Links are set up, replace these URLs
+  if(plan === 'monthly') {
+    window.location.href = 'https://saysee.io?plan=monthly';
+  } else if(plan === 'annual') {
+    window.location.href = 'https://saysee.io?plan=annual';
+  }
+}
+</script>
+
+<script>
+(function() {
+  window.addEventListener('load', function() {
+    // Footer District Demo button
+    var footerTarget = document.getElementById('cal-btn-footer');
+    if(footerTarget && window.calendar && window.calendar.schedulingButton) {
+      calendar.schedulingButton.load({
+        url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ16EIUWe8_HgVVf16_CMn3kz9bGrLfQRWAK9Fh2R8D01uwdJ-6jsP_xMFtmuhEuuQK0CqiIeX8a?gv=true',
+        color: '#5AAB2A',
+        label: '📅 Book a Demo',
+        target: footerTarget,
+      });
+    }
+  });
+})();
+</script>
 </body>
 </html>
 
